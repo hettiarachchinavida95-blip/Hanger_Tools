@@ -5,127 +5,230 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Hangar Tool Store</title>
 <style>
-:root{--bg:#f4f6f9;--card:#fff;--text:#14213d;--muted:#5b667a;--accent:#0b5fff;--line:#dde3ec;--tile:#e8eefc;
-box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1420;--card:#172033;--text:#eaf0fb;--muted:#9aa8c2;--accent:#6ea0ff;--line:#2a3550;--tile:#1f2c4a;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0e1420;--card:#172033;--text:#eaf0fb;--muted:#9aa8c2;--accent:#6ea0ff;--line:#2a3550;--tile:#1f2c4a;color-scheme:dark}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
+:root{--bg:#f3f5f9;--card:#fff;--text:#12203b;--muted:#5a667c;--accent:#0b5fff;--amber:#ffb400;--line:#dbe1ec;--tile:#e7edfb;--ok:#0f8a4b;--warn:#b7791f;--bad:#c53030;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1320;--card:#161f33;--text:#eaf0fb;--muted:#9aa8c2;--accent:#6ea0ff;--line:#2a3550;--tile:#1f2c4a;--ok:#4cd68b;--warn:#f0b84a;--bad:#ff7b7b;color-scheme:dark}}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.45}
-header{padding:20px 16px 8px;max-width:960px;margin:0 auto}
-h1{margin:0;font-size:1.5rem}
-header p{margin:4px 0 0;color:var(--muted);font-size:.95rem}
-.bar{display:flex;gap:8px;flex-wrap:wrap;max-width:960px;margin:12px auto;padding:0 16px}
-input,textarea,button{font:inherit;color:var(--text)}
-input,textarea{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
-.bar input{flex:1;min-width:180px;width:auto}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.45;padding-bottom:env(safe-area-inset-bottom,0px)}
+header{background:linear-gradient(135deg,#0a1f44,#12408f);color:#fff;padding:calc(18px + env(safe-area-inset-top,0px)) 16px 22px}
+.wrap{max-width:1000px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:64px;height:64px;border-radius:12px;background:#fff;display:flex;align-items:center;justify-content:center;flex:none;overflow:hidden}
+.logo img{width:100%;height:100%;object-fit:contain}
+h1{margin:0;font-size:1.35rem;line-height:1.15}
+.sub{margin:2px 0 0;opacity:.8;font-size:.88rem}
+input,textarea,select,button{font:inherit;color:var(--text)}
+input,textarea,select{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;width:100%}
 button{background:var(--accent);color:#fff;border:0;border-radius:10px;padding:10px 14px;cursor:pointer;font-weight:600}
 button.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
-button.del{background:transparent;color:var(--muted);border:0;padding:4px 8px;font-weight:400;font-size:.85rem}
-main{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;max-width:960px;margin:0 auto;padding:0 16px 40px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
-.pic{aspect-ratio:4/3;background:var(--tile);display:flex;align-items:center;justify-content:center;font-size:3.5rem}
+header button.ghost{color:#fff;border-color:rgba(255,255,255,.6)}
+button.danger{background:var(--bad)}
+.bar{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.bar input{flex:1;min-width:170px;width:auto;color:#12203b}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:14px 16px 4px;max-width:1000px;margin:0 auto}
+.chip{background:var(--card);color:var(--text);border:1px solid var(--line);border-radius:999px;padding:7px 14px;white-space:nowrap;font-weight:500}
+.chip.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+#banner{display:none;background:var(--amber);color:#0a1f44;text-align:center;padding:6px 12px;font-size:.85rem;font-weight:600}
+main{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;max-width:1000px;margin:0 auto;padding:12px 16px 40px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;transition:transform .15s,box-shadow .15s}
+.card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.12)}
+.pic{aspect-ratio:4/3;background:var(--tile);display:flex;align-items:center;justify-content:center;font-size:3.4rem}
 .pic img{width:100%;height:100%;object-fit:cover}
-.body{padding:12px 14px 8px;flex:1}
-.body h3{margin:0 0 4px;font-size:1.05rem}
-.body p{margin:0;color:var(--muted);font-size:.92rem}
+.body{padding:12px 14px 14px}
+.body h3{margin:0 0 6px;font-size:1.02rem}
+.meta{color:var(--muted);font-size:.82rem;margin-top:6px}
+.tag{display:inline-block;font-size:.72rem;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--tile);color:var(--accent);margin-right:4px}
+.b-ok{color:var(--ok)}.b-warn{color:var(--warn)}.b-bad{color:var(--bad)}
+.tag.b{background:transparent;border:1px solid currentColor}
 .empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:40px 0}
-dialog{border:1px solid var(--line);border-radius:16px;background:var(--card);color:var(--text);width:min(420px,92vw);padding:18px}
-dialog::backdrop{background:rgba(0,0,0,.5)}
-label{display:block;font-size:.85rem;color:var(--muted);margin:10px 0 4px}
-.row{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
+dialog{border:1px solid var(--line);border-radius:16px;background:var(--card);color:var(--text);width:min(460px,94vw);max-height:92vh;padding:18px}
+dialog::backdrop{background:rgba(0,0,0,.55)}
+label{display:block;font-size:.82rem;color:var(--muted);margin:10px 0 4px}
+.row{display:flex;gap:8px;justify-content:flex-end;margin-top:16px;flex-wrap:wrap}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#big{width:100%;border-radius:12px;max-height:300px;object-fit:cover;background:var(--tile);aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;font-size:5rem;overflow:hidden}
+#big img{width:100%;height:100%;object-fit:cover}
+#prev{max-width:100%;max-height:130px;border-radius:10px;margin-top:8px;display:none}
 #qr{background:#fff;padding:12px;border-radius:12px;display:inline-block}
 .center{text-align:center}
-#prev{max-width:100%;max-height:140px;border-radius:10px;margin-top:8px;display:none}
 .note{font-size:.8rem;color:var(--muted);text-align:center;padding:0 16px 24px}
+@media print{header,.chips,main,.note,#banner{display:none}#qrDlg .row{display:none}}
 </style>
 </head>
 <body>
-<header>
-<h1>✈️ Hangar Tool Store</h1>
-<p>Scan, search and learn what each tool is for.</p>
-</header>
+<div id="banner">Demo mode: tools are saved only in this browser</div>
+<header><div class="wrap">
+<div class="brand">
+<div class="logo"><img alt="Asian Aviation Centre logo" src="data:image/jpeg;base64,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"></div>
+<div><h1 id="college">Asian Aviation Centre</h1><p class="sub">Hangar Tool Store</p></div>
+</div>
 <div class="bar">
 <input id="q" type="search" placeholder="Search tools…" aria-label="Search tools">
-<button id="add">+ Add tool</button>
+<button id="add" style="display:none">+ Add tool</button>
 <button id="qrbtn" class="ghost">QR code</button>
+<button id="auth" class="ghost">Staff login</button>
 </div>
+</div></header>
+<div class="chips" id="chips"></div>
 <main id="grid"></main>
-<p class="note">Demo: tools you add are saved in this browser only.</p>
+<p class="note">Scan the QR code in the hangar to open this page.</p>
 
-<dialog id="addDlg">
-<h2 style="margin:0">Add a tool</h2>
-<label for="n">Tool name</label>
-<input id="n" maxlength="60" placeholder="e.g. Torque wrench">
-<label for="p">Purpose</label>
-<textarea id="p" rows="3" maxlength="300" placeholder="What is it used for?"></textarea>
-<label for="f">Photo</label>
-<input id="f" type="file" accept="image/*" capture="environment">
+<dialog id="viewDlg">
+<div id="big"></div>
+<h2 id="vName" style="margin:12px 0 4px"></h2>
+<div id="vTags"></div>
+<p id="vPurpose"></p>
+<div class="meta" id="vMeta"></div>
+<div class="row"><button class="ghost" id="vEdit">Edit</button><button class="danger" id="vDel">Delete</button><button id="vClose">Close</button></div>
+</dialog>
+
+<dialog id="formDlg">
+<h2 id="fTitle" style="margin:0">Add a tool</h2>
+<label for="n">Tool name</label><input id="n" maxlength="60">
+<label for="p">Purpose</label><textarea id="p" rows="3" maxlength="300" placeholder="What is it used for?"></textarea>
+<div class="two">
+<div><label for="c">Category</label><select id="c"></select></div>
+<div><label for="cd">Condition</label><select id="cd"></select></div>
+<div><label for="no">Tool number</label><input id="no" maxlength="30" placeholder="e.g. TW-014"></div>
+<div><label for="lc">Shelf location</label><input id="lc" maxlength="40" placeholder="e.g. Rack B, Shelf 2"></div>
+</div>
+<label for="f">Photo</label><input id="f" type="file" accept="image/*">
 <img id="prev" alt="Preview">
-<div class="row"><button class="ghost" id="cancel">Cancel</button><button id="save">Save tool</button></div>
+<div class="row"><button class="ghost" id="fCancel">Cancel</button><button id="save">Save tool</button></div>
+</dialog>
+
+<dialog id="loginDlg">
+<h2 style="margin:0">Staff login</h2>
+<label for="em">Email</label><input id="em" type="email" autocomplete="username">
+<label for="pw">Password</label><input id="pw" type="password" autocomplete="current-password">
+<div class="row"><button class="ghost" id="lCancel">Cancel</button><button id="lGo">Log in</button></div>
 </dialog>
 
 <dialog id="qrDlg">
-<div class="center">
-<h2 style="margin:0 0 12px">Scan to open</h2>
-<div id="qr"></div>
-<p style="color:var(--muted);font-size:.85rem;word-break:break-all" id="url"></p>
-</div>
+<div class="center"><h2 style="margin:0 0 12px">Scan to open the tool store</h2><div id="qr"></div>
+<p style="color:var(--muted);font-size:.85rem;word-break:break-all" id="url"></p></div>
 <div class="row"><button class="ghost" onclick="window.print()">Print</button><button id="qrClose">Close</button></div>
 </dialog>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
-var KEY='hangar-tools-v1';
-var seed=[
-{n:'Torque wrench',p:'Tightens bolts and nuts to an exact torque so fasteners are neither loose nor over-stressed.',e:'🔧'},
-{n:'Safety wire pliers',p:'Twist and cut lockwire to stop fasteners from backing off due to vibration.',e:'🪢'},
-{n:'Feeler gauge',p:'Measures tiny gaps, such as valve or spark plug clearances.',e:'📏'},
-{n:'Digital multimeter',p:'Checks voltage, current and continuity when troubleshooting aircraft wiring.',e:'⚡'},
-{n:'Rivet gun',p:'Drives rivets to join sheet-metal skin and structural panels.',e:'🔩'}];
-var tools=[];
-try{var s=localStorage.getItem(KEY);tools=s?JSON.parse(s):seed.slice()}catch(e){tools=seed.slice()}
-function persist(){try{localStorage.setItem(KEY,JSON.stringify(tools))}catch(e){alert('Storage is full or unavailable. Try a smaller photo.')}}
-function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
-function render(){
- var q=document.getElementById('q').value.toLowerCase(),g=document.getElementById('grid'),h='';
- tools.forEach(function(t,i){
-  if((t.n+' '+t.p).toLowerCase().indexOf(q)<0)return;
-  h+='<article class="card"><div class="pic">'+(t.img?'<img alt="'+esc(t.n)+'" src="'+t.img+'">':(t.e||'🧰'))+'</div><div class="body"><h3>'+esc(t.n)+'</h3><p>'+esc(t.p)+'</p></div><div><button class="del" data-i="'+i+'">Remove</button></div></article>';
- });
- g.innerHTML=h||'<div class="empty">No tools found.</div>';
-}
-document.getElementById('q').oninput=render;
-document.getElementById('grid').onclick=function(e){
- var i=e.target.getAttribute('data-i');
- if(i!==null&&confirm('Remove this tool?')){tools.splice(+i,1);persist();render()}
+/* ===== SETTINGS: edit these lines ===== */
+var CFG={
+ college:'Asian Aviation Centre',
+ supabaseUrl:'',   // paste your Supabase Project URL
+ supabaseKey:''    // paste your Supabase anon (public) key
 };
-var addDlg=document.getElementById('addDlg'),img='';
-document.getElementById('add').onclick=function(){img='';['n','p','f'].forEach(function(id){document.getElementById(id).value=''});document.getElementById('prev').style.display='none';addDlg.showModal()};
-document.getElementById('cancel').onclick=function(){addDlg.close()};
-document.getElementById('f').onchange=function(e){
- var file=e.target.files[0];if(!file)return;
- var r=new FileReader();
+/* ====================================== */
+var CATS=['Hand tools','Measuring','Power tools','Electrical','Safety','Other'];
+var CONDS=['Serviceable','Calibration due','Needs repair','Out of service'];
+var CCLS=['b-ok','b-warn','b-warn','b-bad'];
+var EMO={'Hand tools':'🔧','Measuring':'📏','Power tools':'🔩','Electrical':'⚡','Safety':'🦺','Other':'🧰'};
+var KEY='hangar-tools-v2',live=!!(CFG.supabaseUrl&&CFG.supabaseKey&&window.supabase),sb=null;
+var tools=[],cat='All',staff=false,editId=null,img='',viewId=null;
+function $(i){return document.getElementById(i)}
+function esc(t){return String(t==null?'':t).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+$('college').textContent=CFG.college;document.title=CFG.college+' – Tool Store';
+var seed=[
+{id:'1',name:'Torque wrench',purpose:'Tightens bolts and nuts to an exact torque so fasteners are neither loose nor over-stressed.',category:'Hand tools',tool_no:'TW-014',location:'Rack A, Shelf 1',condition:'Calibration due'},
+{id:'2',name:'Safety wire pliers',purpose:'Twist and cut lockwire to stop fasteners backing off from vibration.',category:'Hand tools',tool_no:'SW-003',location:'Rack A, Shelf 2',condition:'Serviceable'},
+{id:'3',name:'Feeler gauge',purpose:'Measures tiny gaps, such as valve or spark plug clearances.',category:'Measuring',tool_no:'FG-021',location:'Cabinet 2',condition:'Serviceable'},
+{id:'4',name:'Digital multimeter',purpose:'Checks voltage, current and continuity when troubleshooting aircraft wiring.',category:'Electrical',tool_no:'MM-007',location:'Cabinet 3',condition:'Serviceable'},
+{id:'5',name:'Rivet gun',purpose:'Drives rivets to join sheet-metal skin and structural panels.',category:'Power tools',tool_no:'RG-002',location:'Rack C',condition:'Needs repair'}];
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(tools))}catch(e){alert('Storage is full. Try a smaller photo.')}}
+async function load(){
+ if(live){var r=await sb.from('tools').select('*').order('created_at',{ascending:false});if(r.error){alert('Could not load tools: '+r.error.message);return}tools=r.data}
+ else{try{var s=localStorage.getItem(KEY);tools=s?JSON.parse(s):seed.slice()}catch(e){tools=seed.slice()}}
+ render();
+}
+function setStaff(v){staff=v;$('add').style.display=v?'':'none';$('auth').textContent=v?'Sign out':'Staff login'}
+function render(){
+ var h='';['All'].concat(CATS).forEach(function(c){h+='<button class="chip'+(c===cat?' on':'')+'" data-c="'+c+'">'+c+'</button>'});
+ $('chips').innerHTML=h;
+ var q=$('q').value.toLowerCase();h='';
+ tools.forEach(function(t){
+  if(cat!=='All'&&t.category!==cat)return;
+  if((t.name+' '+t.purpose+' '+(t.tool_no||'')).toLowerCase().indexOf(q)<0)return;
+  var ci=CONDS.indexOf(t.condition);
+  h+='<article class="card" data-id="'+esc(t.id)+'"><div class="pic">'+(t.image?'<img alt="'+esc(t.name)+'" src="'+t.image+'">':(EMO[t.category]||'🧰'))+'</div><div class="body"><h3>'+esc(t.name)+'</h3><span class="tag">'+esc(t.category||'Other')+'</span>'+(ci>=0?'<span class="tag b '+CCLS[ci]+'">'+esc(t.condition)+'</span>':'')+'<div class="meta">'+(t.tool_no?'No. '+esc(t.tool_no):'')+(t.location?' · '+esc(t.location):'')+'</div></div></article>';
+ });
+ $('grid').innerHTML=h||'<div class="empty">No tools found.</div>';
+}
+function find(id){return tools.filter(function(t){return String(t.id)===String(id)})[0]}
+$('q').oninput=render;
+$('chips').onclick=function(e){var c=e.target.getAttribute('data-c');if(c){cat=c;render()}};
+$('grid').onclick=function(e){
+ var a=e.target.closest('.card');if(!a)return;var t=find(a.getAttribute('data-id'));if(!t)return;
+ viewId=t.id;$('big').innerHTML=t.image?'<img alt="" src="'+t.image+'">':(EMO[t.category]||'🧰');
+ $('vName').textContent=t.name;$('vPurpose').textContent=t.purpose;
+ var ci=CONDS.indexOf(t.condition);
+ $('vTags').innerHTML='<span class="tag">'+esc(t.category||'Other')+'</span>'+(ci>=0?'<span class="tag b '+CCLS[ci]+'">'+esc(t.condition)+'</span>':'');
+ $('vMeta').textContent=[t.tool_no?'Tool number: '+t.tool_no:'',t.location?'Location: '+t.location:''].filter(Boolean).join('  ·  ');
+ $('vEdit').style.display=$('vDel').style.display=staff?'':'none';
+ $('viewDlg').showModal();
+};
+$('vClose').onclick=function(){$('viewDlg').close()};
+$('c').innerHTML=CATS.map(function(c){return'<option>'+c+'</option>'}).join('');
+$('cd').innerHTML=CONDS.map(function(c){return'<option>'+c+'</option>'}).join('');
+function openForm(t){
+ editId=t?t.id:null;img=t&&t.image?t.image:'';
+ $('fTitle').textContent=t?'Edit tool':'Add a tool';
+ $('n').value=t?t.name:'';$('p').value=t?t.purpose:'';$('c').value=t?t.category:CATS[0];$('cd').value=t?t.condition:CONDS[0];
+ $('no').value=t&&t.tool_no||'';$('lc').value=t&&t.location||'';$('f').value='';
+ $('prev').src=img;$('prev').style.display=img?'block':'none';$('formDlg').showModal();
+}
+$('add').onclick=function(){openForm(null)};
+$('vEdit').onclick=function(){$('viewDlg').close();openForm(find(viewId))};
+$('fCancel').onclick=function(){$('formDlg').close()};
+$('f').onchange=function(e){
+ var file=e.target.files[0];if(!file)return;var r=new FileReader();
  r.onload=function(){var im=new Image();im.onload=function(){
-  var m=480,s=Math.min(1,m/Math.max(im.width,im.height)),c=document.createElement('canvas');
+  var s=Math.min(1,480/Math.max(im.width,im.height)),c=document.createElement('canvas');
   c.width=im.width*s;c.height=im.height*s;c.getContext('2d').drawImage(im,0,0,c.width,c.height);
-  img=c.toDataURL('image/jpeg',.7);var p=document.getElementById('prev');p.src=img;p.style.display='block';
- };im.src=r.result};
+  img=c.toDataURL('image/jpeg',.7);$('prev').src=img;$('prev').style.display='block'};im.src=r.result};
  r.readAsDataURL(file);
 };
-document.getElementById('save').onclick=function(){
- var n=document.getElementById('n').value.trim(),p=document.getElementById('p').value.trim();
- if(!n||!p){alert('Please enter a name and a purpose.');return}
- tools.unshift({n:n,p:p,img:img});persist();render();addDlg.close();
+$('save').onclick=async function(){
+ var o={name:$('n').value.trim(),purpose:$('p').value.trim(),category:$('c').value,condition:$('cd').value,tool_no:$('no').value.trim(),location:$('lc').value.trim(),image:img};
+ if(!o.name||!o.purpose){alert('Please enter a name and a purpose.');return}
+ if(live){
+  var r=editId?await sb.from('tools').update(o).eq('id',editId):await sb.from('tools').insert(o);
+  if(r.error){alert('Could not save: '+r.error.message);return}
+  await load();
+ }else{
+  if(editId){var t=find(editId);for(var k in o)t[k]=o[k]}else{o.id=String(Date.now());tools.unshift(o)}
+  persist();render();
+ }
+ $('formDlg').close();
 };
-var qrDlg=document.getElementById('qrDlg'),made=false;
-document.getElementById('qrbtn').onclick=function(){
- if(!made&&window.QRCode){new QRCode(document.getElementById('qr'),{text:location.href.split('#')[0],width:200,height:200});made=true}
- document.getElementById('url').textContent=location.href.split('#')[0];
- qrDlg.showModal();
+$('vDel').onclick=async function(){
+ if(!confirm('Delete this tool?'))return;
+ if(live){var r=await sb.from('tools').delete().eq('id',viewId);if(r.error){alert('Could not delete: '+r.error.message);return}await load()}
+ else{tools=tools.filter(function(t){return String(t.id)!==String(viewId)});persist();render()}
+ $('viewDlg').close();
 };
-document.getElementById('qrClose').onclick=function(){qrDlg.close()};
-render();
+$('auth').onclick=async function(){
+ if(staff){if(live)await sb.auth.signOut();setStaff(false)}else{$('loginDlg').showModal()}
+};
+$('lCancel').onclick=function(){$('loginDlg').close()};
+$('lGo').onclick=async function(){
+ if(!live){setStaff(true);$('loginDlg').close();return}
+ var r=await sb.auth.signInWithPassword({email:$('em').value.trim(),password:$('pw').value});
+ if(r.error){alert('Login failed: '+r.error.message);return}
+ $('pw').value='';setStaff(true);$('loginDlg').close();
+};
+var made=false;
+$('qrbtn').onclick=function(){
+ var u=location.href.split('#')[0];
+ if(!made&&window.QRCode){new QRCode($('qr'),{text:u,width:220,height:220});made=true}
+ $('url').textContent=u;$('qrDlg').showModal();
+};
+$('qrClose').onclick=function(){$('qrDlg').close()};
+(async function(){
+ if(live){sb=window.supabase.createClient(CFG.supabaseUrl,CFG.supabaseKey);var s=await sb.auth.getSession();setStaff(!!(s.data&&s.data.session))}
+ else{$('banner').style.display='block'}
+ load();
+})();
 </script>
 </body>
 </html>
